@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>Syd Character Map</title>
+    <style>
+        /* Create two equal columns that floats next to each other */
+        .column {
+        float: left;
+        padding: 10px;
+        }
+
+        /* Clear floats after the columns */
+        .row {
+        display: table;
+        clear: both;
+        }
+        
+        .slider {
+        -webkit-appearance: none;  /* Override default CSS styles */
+        appearance: none;
+        width: 300px; /* Full-width */
+        height: 20px; /* Specified height */
+        border-radius: 10px;
+        background: #d3d3d3; /* Grey background */
+        outline: none; /* Remove outline */
+        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+      }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="column">
+            <svg width="700" height="800"></svg>
+        </div>
+        <div class="column">
+            <h2>A Visit From The Slime Squad</h2>
+            <h3>Sydney Simoncini Friend Map</h3>
+            <p style="color: rgb(211,211,211);font-size:12px">****************************************************</p>
+            <div style="width:300px;">
+                <p style="word-wrap:normal;font-size:20px;">Here, relationships between Syd's friends are displayed. By moving the slider, you can see an approximate sequence of her friendships.</p>
+            </div>
+            <div id="slider">
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="56" value="56" class="slider" id="myRange">
+                    <p style="color: rgba(0,0,0,0);">Value: <span id="demo"></span></p>
+                </div>
+            </div>
+            <p style="color: rgb(211,211,211);font-size:12px">****************************************************</p>
+            <div style="width:300px;">
+                <p style="word-wrap:normal;font-size:16px;">Note: Basically all of Syd's friends know each other. For the sake of brevity, many connections have been omitted from this chart.</p>
+            </div>
+        </div>
+    </div>
+   
+
+    <script>
+        var svg = d3.select("svg");
+        var width = svg.attr("width");
+        var height = svg.attr("height");
+
+        var nodes = [
+        {name: "Sydney", gender: "pink", era: 0, size: 11},
+        {name: "Ally", gender: "pink", era: 1, size: 5},
+        {name: "Zoe", gender: "pink", era: 2, size: 7},
+        {name: "Alissa", gender: "pink", "era": 3, size: 7},
+        {name: "Nina", gender: "pink", "era": 4, size: 5},
+        {name: "Hannah Brauer", gender: "pink", "era": 5, size: 7},
+        {name: "Shannon", gender: "pink", "era": 6, size: 7},
+        {name: "Veronica", gender: "pink", "era": 7, size: 5},
+        {name: "Jackie", gender: "pink", "era": 8, size: 5},
+        {name: "Kevin", gender: "pink", era: 9, size: 5},
+
+        {name: "Alexandra", gender: "pink", "era": 10, size: 7},
+        {name: "Wyatt", gender: "#5599ff", era: 11, size: 7},
+        {name: "David", gender: "#5599ff", era: 12, size: 7},
+        {name: "Adam", gender: "#5599ff", "era": 13, size: 7},
+        {name: "Riley", gender: "#5599ff", "era": 14, size: 5},
+        
+        {name: "Annelise", gender: "pink", "era": 15, size: 5},
+        {name: "Abby", gender: "pink", "era": 16, size: 7},
+        {name: "Marina", gender: "pink", "era": 17, size: 7},
+        {name: "Maria", gender: "pink", "era": 18, size: 7},
+        {name: "Rads", gender: "pink", "era": 19, size: 7},
+        {name: "Jack", gender: "#5599ff", "era": 20, size: 5},
+        {name: "Ted", gender: "#5599ff", "era": 21, size: 5},
+        {name: "Nico", gender: "#5599ff", "era": 22, size: 5},
+        {name: "Matt Huston", gender: "#5599ff", "era": 22, size: 5},
+        {name: "Rebekah", gender: "pink", "era": 23, size: 7},
+        {name: "Brent", gender: "#5599ff", "era": 24, size: 5},
+        
+        //Guessing interlochen goes here in the middle of UM
+        {name: "Sara", gender: "pink", "era": 25, size: 5},
+        {name: "Hannah Good", gender: "pink", "era": 26, size: 5},
+        {name: "Nathan", gender: "#5599ff", "era": 27, size: 5},
+        
+        //Back to UM
+        {name: "Josh", gender: "#5599ff", "era": 28, size: 6},
+        {name: "Seth", gender: "#5599ff", "era": 29, size: 6},
+        {name: "Trevor", gender: "#5599ff", "era": 30, size: 6},
+        {name: "Vern", gender: "pink", "era": 31, size: 6},
+        {name: "Ben", gender: "#5599ff", "era": 32, size: 6},
+        {name: "Zach", gender: "#5599ff", "era": 33, size: 6},
+        {name: "Thejas", gender: "#5599ff", "era": 34, size: 6},
+        {name: "Gian", gender: "pink", "era": 35, size: 6},
+        {name: "Jack Fraiser", gender: "#5599ff", "era": 36, size: 6},
+        {name: "Madeleine", gender: "pink", "era": 37, size: 6},
+        {name: "Brielle", gender: "pink", "era": 38, size: 6},
+        {name: "Jordan", gender: "#5599ff", "era": 39, size: 6},
+        {name: "Alison Elgass", gender: "pink", "era": 40, size: 5},
+        {name: "Fion", gender: "pink", "era": 41, size: 6},
+        {name: "Christine", gender: "pink", "era": 42, size: 6},
+        {name: "Makayla", gender: "pink", "era": 43, size: 6},
+
+        //Back to interlochen
+        {name: "Jeff", gender: "#5599ff", "era": 44, size: 6},
+        {name: "RJ", gender: "#5599ff", "era": 45, size: 6},
+        {name: "Mauri", gender: "pink", "era": 46, size: 6},
+        {name: "Graham", gender: "#5599ff", "era": 47, size: 6},
+
+        //NYU
+        {name: "Macarena", gender: "pink", "era": 48, size: 6},
+        {name: "Yenny", gender: "pink", "era": 49, size: 6},
+        {name: "Molly", gender: "pink", "era": 50, size: 7},
+
+        //Back to interlochen
+        {name: "Fox", gender: "#a020f0", "era": 51, size: 7},
+        {name: "Bailey", gender: "pink", "era": 52, size: 6},
+        {name: "Evan", gender: "pink", "era": 53, size: 6},
+
+        //Back to NY
+        {name: "Natalia", gender: "pink", "era": 54, size: 7}
+        ];
+
+        //var nodesChanging = nodes;
+
+        var links = [
+        //Source Syd
+        
+        {source: "Sydney", target: "Ally", close: 100, era: 1},
+        {source: "Sydney", target: "Zoe", close: 150, era: 2},
+        {source: "Sydney", target: "Alissa", close: 150, era: 3},
+        {source: "Sydney", target: "Nina", close: 220, era: 4},
+        {source: "Sydney", target: "Hannah Brauer", close: 50, era: 5},
+        {source: "Sydney", target: "Shannon", close: 150, era: 6},
+        {source: "Sydney", target: "Veronica", close: 210, era: 7},
+        {source: "Sydney", target: "Jackie", close: 150, era: 8},
+        {source: "Sydney", target: "Kevin", close: 250, era: 9},
+        {source: "Sydney", target: "Alexandra", close: 150, era: 10},
+        {source: "Sydney", target: "Wyatt", close: 150, era: 11},
+        {source: "Sydney", target: "David", close: 200, era: 12},
+        {source: "Sydney", target: "Adam", close: 150, era: 13},
+        {source: "Sydney", target: "Riley", close: 200, era: 14},
+        {source: "Sydney", target: "Annelise", close: 150, era: 15},
+        {source: "Sydney", target: "Abby", close: 150, era: 16},
+        {source: "Sydney", target: "Marina", close: 150, era: 17},
+        {source: "Sydney", target: "Maria", close: 50, era: 18},
+        {source: "Sydney", target: "Rads", close: 150, era: 19},
+        {source: "Sydney", target: "Jack", close: 160, era: 20},
+        {source: "Sydney", target: "Ted", close: 150, era: 21},
+        {source: "Sydney", target: "Nico", close: 150, era: 22},
+        {source: "Sydney", target: "Matt Huston", close: 200, era: 22},
+        {source: "Sydney", target: "Rebekah", close: 220, era: 23},
+        {source: "Sydney", target: "Brent", close: 250, era: 24},
+        {source: "Sydney", target: "Sara", close: 220, era: 25},
+        {source: "Sydney", target: "Hannah Good", close: 200, era: 26},
+        {source: "Sydney", target: "Nathan", close: 250, era: 27},
+        {source: "Sydney", target: "Josh", close: 150, era: 28},
+        {source: "Sydney", target: "Seth", close: 280, era: 29},
+        {source: "Sydney", target: "Trevor", close: 150, era: 30},
+        {source: "Sydney", target: "Vern", close: 280, era: 31},
+        {source: "Sydney", target: "Ben", close: 150, era: 32},
+        {source: "Sydney", target: "Zach", close: 150, era: 33},
+        {source: "Sydney", target: "Thejas", close: 190, era: 34},
+        {source: "Sydney", target: "Gian", close: 200, era: 35},
+        {source: "Sydney", target: "Jack Fraiser", close: 260, era: 36},
+        {source: "Sydney", target: "Madeleine", close: 270, era: 37},
+        {source: "Sydney", target: "Brielle", close: 290, era: 38},
+        {source: "Sydney", target: "Jordan", close: 200, era: 39},
+        {source: "Sydney", target: "Alison Elgass", close: 150, era: 40},
+        {source: "Sydney", target: "Fion", close: 290, era: 41},
+        {source: "Sydney", target: "Christine", close: 270, era: 42},
+        {source: "Sydney", target: "Makayla", close: 270, era: 43},
+        {source: "Sydney", target: "Jeff", close: 150, era: 44},
+        {source: "Sydney", target: "RJ", close: 260, era: 45},
+        {source: "Sydney", target: "Mauri", close: 240, era: 46},
+        {source: "Sydney", target: "Graham", close: 200, era: 47},
+        {source: "Sydney", target: "Macarena", close: 150, era: 48},
+        {source: "Sydney", target: "Yenny", close: 150, era: 49},
+        {source: "Sydney", target: "Molly", close: 150, era: 50},
+        {source: "Sydney", target: "Fox", close: 30, era: 51},
+        {source: "Sydney", target: "Bailey", close: 250, era: 52},
+        {source: "Sydney", target: "Evan", close: 150, era: 53},
+        {source: "Sydney", target: "Natalia", close: 150, era: 54},
+
+        //Source Zoe
+        {source: "Zoe", target: "Alexandra", close: 150, era: 10},
+        {source: "Zoe", target: "Wyatt", close: 150, era: 11},
+        {source: "Zoe", target: "David", close: 150, era: 12},
+        {source: "Zoe", target: "Adam", close: 150, era: 13},
+        {source: "Zoe", target: "Abby", close: 150, era: 16},
+        {source: "Zoe", target: "Marina", close: 150, era: 17},
+        {source: "Zoe", target: "Maria", close: 150, era: 18},
+        {source: "Zoe", target: "Rads", close: 150, era: 19},
+        //{source: "Zoe", target: "Ted", close: 150, era: 21},
+        //{source: "Zoe", target: "Nico", close: 150, era: 22},
+        {source: "Zoe", target: "Rebekah", close: 150, era: 23},
+        //{source: "Zoe", target: "Josh", close: 150, era: 28},
+        //{source: "Zoe", target: "Seth", close: 150, era: 29},
+        //{source: "Zoe", target: "Trevor", close: 150, era: 30},
+        //{source: "Zoe", target: "Vern", close: 150, era: 31},
+        //{source: "Zoe", target: "Ben", close: 150, era: 32},
+        {source: "Zoe", target: "Zach", close: 150, era: 33},
+        {source: "Zoe", target: "Thejas", close: 150, era: 34},
+
+        //Source Alissa
+        {source: "Alissa", target: "Alexandra", close: 150, era: 10},
+        {source: "Alissa", target: "Wyatt", close: 150, era: 11},
+        {source: "Alissa", target: "David", close: 150, era: 12},
+        {source: "Alissa", target: "Adam", close: 50, era: 13},
+        {source: "Alissa", target: "Abby", close: 150, era: 16},
+        {source: "Alissa", target: "Marina", close: 150, era: 17},
+        {source: "Alissa", target: "Maria", close: 150, era: 18},
+        {source: "Alissa", target: "Rads", close: 150, era: 19},
+        {source: "Alissa", target: "Ted", close: 150, era: 21},
+        {source: "Alissa", target: "Nico", close: 150, era: 22},
+        {source: "Alissa", target: "Rebekah", close: 150, era: 23},
+        {source: "Alissa", target: "Josh", close: 150, era: 28},
+        //{source: "Alissa", target: "Seth", close: 150, era: 29},
+        //{source: "Alissa", target: "Trevor", close: 150, era: 30},
+        //{source: "Alissa", target: "Ben", close: 150, era: 32},
+        {source: "Alissa", target: "Zach", close: 150, era: 33},
+
+        // Source Hannah Brauer
+        {source: "Hannah Brauer", target: "Alexandra", close: 150, era: 10},
+        {source: "Hannah Brauer", target: "Wyatt", close: 150, era: 11},
+        //{source: "Hannah Brauer", target: "David", close: 150, era: 12},
+        {source: "Hannah Brauer", target: "Adam", close: 150, era: 13},
+        {source: "Hannah Brauer", target: "Abby", close: 150, era: 16},
+        {source: "Hannah Brauer", target: "Marina", close: 150, era: 17},
+        {source: "Hannah Brauer", target: "Maria", close: 150, era: 18},
+        {source: "Hannah Brauer", target: "Rads", close: 150, era: 19},
+        //{source: "Hannah Brauer", target: "Ted", close: 150, era: 21},
+        //{source: "Hannah Brauer", target: "Nico", close: 150, era: 22},
+        {source: "Hannah Brauer", target: "Rebekah", close: 150, era: 23},
+        //{source: "Hannah Brauer", target: "Josh", close: 150, era: 28},
+        //{source: "Hannah Brauer", target: "Seth", close: 150, era: 29},
+        //{source: "Hannah Brauer", target: "Trevor", close: 150, era: 30},
+        //{source: "Hannah Brauer", target: "Ben", close: 150, era: 32},
+        {source: "Hannah Brauer", target: "Zach", close: 150, era: 33},
+
+        // Source Shannon
+        {source: "Shannon", target: "Wyatt", close: 150, era: 11},
+        {source: "Shannon", target: "Adam", close: 150, era: 13},
+
+        // Source Jackie
+        {source: "Jackie", target: "Wyatt", close: 150, era: 11},
+        {source: "Jackie", target: "David", close: 150, era: 13},
+
+        // Source Alexandra
+        {source: "Alexandra", target: "Nina", close: 200, era: 10},
+        {source: "Alexandra", target: "Shannon", close: 200, era: 10},
+        {source: "Alexandra", target: "Veronica", close: 200, era: 10},
+        {source: "Alexandra", target: "Jackie", close: 200, era: 10},
+        //{source: "Alexandra", target: "Kevin", close: 200, era: 10},
+        {source: "Alexandra", target: "Wyatt", close: 200, era: 11},
+        {source: "Alexandra", target: "David", close: 200, era: 12},
+        {source: "Alexandra", target: "Adam", close: 200, era: 13},
+        {source: "Alexandra", target: "Abby", close: 200, era: 16},
+        {source: "Alexandra", target: "Marina", close: 200, era: 17},
+        {source: "Alexandra", target: "Maria", close: 200, era: 18},
+        {source: "Alexandra", target: "Rads", close: 200, era: 19},
+        //{source: "Alexandra", target: "Ted", close: 200, era: 21},
+        //{source: "Alexandra", target: "Nico", close: 200, era: 22},
+        //{source: "Alexandra", target: "Rebekah", close: 200, era: 23},
+        //{source: "Alexandra", target: "Josh", close: 200, era: 28},
+        //{source: "Alexandra", target: "Seth", close: 200, era: 29},
+        //{source: "Alexandra", target: "Trevor", close: 200, era: 30},
+        //{source: "Alexandra", target: "Ben", close: 200, era: 32},
+        {source: "Alexandra", target: "Zach", close: 200, era: 33},
+        {source: "Alexandra", target: "Molly", close: 200, era: 50},
+
+        // Source Wyatt
+        {source: "Wyatt", target: "Nina", close: 170, era: 11},
+        {source: "Wyatt", target: "Shannon", close: 170, era: 11},
+        {source: "Wyatt", target: "Jackie", close: 170, era: 11},
+        //{source: "Wyatt", target: "Kevin", close: 170, era: 11},
+        //{source: "Wyatt", target: "Veronica", close: 170, era: 11},
+        //{source: "Wyatt", target: "David", close: 150, era: 12},
+        {source: "Wyatt", target: "Adam", close: 150, era: 13},
+
+        // Source Abby
+        {source: "Abby", target: "Molly", close: 150, era: 50},
+
+        //Source Jack
+        {source: "Jack", target: "Zoe", close: 250, era: 20},
+        {source: "Jack", target: "Alissa", close: 250, era: 20},
+        {source: "Jack", target: "Hannah Brauer", close: 200, era: 20},
+        {source: "Jack", target: "Shannon", close: 200, era: 20},
+        {source: "Jack", target: "Alexandra", close: 250, era: 20},
+        {source: "Jack", target: "Abby", close: 150, era: 20},
+        {source: "Jack", target: "Marina", close: 150, era: 20},
+        {source: "Jack", target: "Maria", close: 250, era: 20},
+        {source: "Jack", target: "Ted", close: 150, era: 21},
+        {source: "Jack", target: "Nico", close: 250, era: 22},
+
+        //Source Nico
+        {source: "Nico", target: "Ted", close: 130, era: 22},
+
+        // Source Rebekah
+        {source: "Rebekah", target: "Brent", close: 150, era: 24},
+
+        // Source Hannah Good
+        {source: "Hannah Good", target: "Nathan", close: 50, era: 27},
+
+        // Source Zach
+        {source: "Zach", target: "Abby", close: 50, era: 33},
+
+        //Source Fox
+        {source: "Fox", target: "Alexandra", close: 150, era: 51},
+        {source: "Fox", target: "Molly", close: 150, era: 51},
+        {source: "Fox", target: "Mauri", close: 250, era: 51},
+        {source: "Fox", target: "Nathan", close: 150, era: 51},
+        {source: "Fox", target: "Jeff", close: 250, era: 51},
+        {source: "Fox", target: "RJ", close: 200, era: 51},
+        {source: "Fox", target: "Bailey", close: 200, era: 52},
+        {source: "Fox", target: "Evan", close: 150, era: 53},
+        {source: "Fox", target: "Graham", close: 150, era: 51},
+        {source: "Fox", target: "Natalia", close: 250, era: 54},
+        {source: "Fox", target: "Marina", close: 150, era: 51},
+        {source: "Fox", target: "Zach", close: 150, era: 51},
+        {source: "Fox", target: "Abby", close: 150, era: 51}
+
+    ];
+
+        var slider = document.getElementById("myRange");
+        var valueDisp = document.getElementById("demo");
+        valueDisp.innerHTML = slider.value;    
+        var newNodes = nodes;
+        //var nodes = nodes.slice(0, slider.value);
+
+        //const jNodes = JSON.parse(charList);
+        //const jLinks = JSON.parse(linkList);
+        //change below to const if getting errors
+        var simulation = d3.forceSimulation(newNodes)
+            .force("charge", d3.forceManyBody())
+            .force("link", d3.forceLink().id(function(d) {
+                return d.name;
+              })
+            .links(links)
+            .distance(function(d) {
+                return d.close;
+            }))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .on("tick", ticked);
+
+        var slider = document.getElementById("myRange");
+        var valueDisp = document.getElementById("demo");
+        valueDisp.innerHTML = slider.value;
+
+        slider.oninput = function() {
+            valueDisp.innerHTML = this.value;
+        }
+            
+        var links = svg
+            .append("g")
+            .selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("stroke-width",3)
+            //.attr("stroke-width", function(d) {
+            //    return d.close / 10;
+            //})
+            .style("stroke", "#dedede")
+            //.attr("display", "block");
+
+        //links.append("text").text(d => d.name);
+
+        var textsAndNodes = svg
+            .append("g")
+            .selectAll("g")
+            .data(newNodes)
+            .enter()
+            .append("g");
+            //.attr("display", function(d,slider) {
+            //    if (d.era < 7) {
+            //        display = "block";
+            //        return display;
+            //    } else {
+            //        display = "none";
+            //        return display;
+            //    }               
+            //});
+
+        var circles = textsAndNodes
+            .append("circle")
+            //.attr("r",7)
+            .attr("r",function(d) {
+                return d.size;
+              })
+            .attr("fill",function(d) {
+                return d.gender;
+              })
+
+
+        var drag = d3
+            .drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+
+
+        //me trying to add text. 
+        var texts = textsAndNodes
+            .append("text")
+            //.attr("pointer-events", "none")
+            .style("user-select", "none")
+            .text(function(d) {
+                return d.name;
+              });
+
+
+        circles.call(drag);
+
+        //I want to create a function that takes the change in value of a slider and updates the 
+        
+
+        
+
+        //console.log(nodesChanging.length);
+
+        //function newSlider(e) {
+        //    var currentValue = document.getElementByID("myRange").value;
+        //    return currentValue;
+        //}
+        
+
+        function ticked() {
+
+            //HOLY FUCK THIS WORKS OKAY OKAY OKAY
+            //NOW UPDATE THE ERAS AND THE DISPLAYS OH FUCK WE DID IT!!!
+            console.log(slider.value);
+            var oldRange = 54
+            if (slider.value != oldRange) {
+                var newNodes = nodes.slice(0,slider.value);
+                simulation.nodes(newNodes).alphaTarget(0.3).force("center", d3.forceCenter(width / 2, height / 2)).restart();
+                oldRange = slider.value;
+            }
+
+            //
+
+            texts.attr("transform", function(d){return "translate(" + (d.x + 10) + ", " + d.y + ")"});
+            //updating the position
+
+            textsAndNodes.attr("display", function(d){if(d.era < slider.value) return display = "block";else{return display = "none"}});
+            links.attr("display", function(d){if(d.era < slider.value) return display = "block";else{return display = "none"}});
+
+
+            circles
+            .attr("cx", function(d) {
+                return d.x;
+            })
+            .attr("cy", function(d) {
+                return d.y;
+            });
+
+            links
+            .attr("x1", function(d) {
+                return d.source.x;
+            })
+            .attr("y1", function(d) {
+                return d.source.y;
+            })
+            .attr("x2", function(d) {
+                return d.target.x;
+            })
+            .attr("y2", function(d) {
+                return d.target.y;
+            });
+            console.log(simulation.alpha());
+        }
+
+        function dragstarted(d) {
+            //your alpha hit 0 it stops! make it run again
+            simulation.alphaTarget(0.3).restart();
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+        }
+        function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+        }
+
+        function dragended(d) {
+            // alpha min is 0, head there
+            simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+    </script>
+</body>
+</html>

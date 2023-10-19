@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>A Visit From The Goon Squad | Interactive Character Map</title>
+		<script type="text/javascript" src="dist/d3.min.js"></script>
+		<script type="text/javascript" src="d3.geom.min.js"></script>
+		<script type="text/javascript" src="d3.layout.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="force.min.css">
+	</head>
+	<body>
+		<div id="chart">
+			<svg width="700" height="700" style="opacity: 1;">
+				<line class="link" x1="213.9540743717177" y1="421.26362791881206" x2="378.95563028543177" y2="356.03465955727756" style="stroke-width: 4;"><title>Employee / Boss</title></line>
+				<line class="link" x1="309.53158498330004" y1="291.04165413386244" x2="378.95563028543177" y2="356.03465955727756" style="stroke-width: 4;"><title>Former Bandmate / Former Bandmate</title></line>
+				<line class="link" x1="416.7108913692965" y1="300.24561915012896" x2="378.95563028543177" y2="356.03465955727756" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="416.7108913692965" y1="300.24561915012896" x2="404.04637440594325" y2="256.7746924895242" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="226.6152286065919" y1="533.2572518877696" x2="213.9540743717177" y2="421.26362791881206" style="stroke-width: 4;"><title>Uncle / Niece</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="491.1179663937239" y2="442.4289390607278" style="stroke-width: 4;"><title>Former Husband / Former Wife</title></line>
+				<line class="link" x1="491.1179663937239" y1="442.4289390607278" x2="462.47572359617294" y2="524.4152901018583" style="stroke-width: 4;"><title>Employee / Boss</title></line>
+				<line class="link" x1="491.1179663937239" y1="442.4289390607278" x2="543.1656853611701" y2="507.2818900804499" style="stroke-width: 4;"><title>Sister / Brother</title></line>
+				<line class="link" x1="213.9540743717177" y1="421.26362791881206" x2="169.37933542689512" y2="386.641439616534" style="stroke-width: 4;"><title>Mother / Daughter</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="254.28407963070725" y2="322.8082797720225" style="stroke-width: 4;"><title>Boss / Promoter</title></line>
+				<line class="link" x1="254.28407963070725" y1="322.8082797720225" x2="213.9540743717177" y2="421.26362791881206" style="stroke-width: 4;"><title>Former Boyfriend / Former Girlfriend</title></line>
+				<line class="link" x1="158.95246067277134" y1="433.93112693376884" x2="213.9540743717177" y2="421.26362791881206" style="stroke-width: 4;"><title>College Friend / College Friend</title></line>
+				<line class="link" x1="148.76273877642987" y1="353.630923348952" x2="83.31525840202053" y2="339.2287704199915" style="stroke-width: 4;"><title>Girlfriend / Boyriend</title></line>
+				<line class="link" x1="148.76273877642987" y1="353.630923348952" x2="213.9540743717177" y2="421.26362791881206" style="stroke-width: 4;"><title>College Friend / College Friend</title></line>
+				<line class="link" x1="122.6097127761608" y1="390.1117418485042" x2="122.6097127761608" y2="390.1117418485042" style="stroke-width: 4;"><title>College Friend / College Friend</title></line>
+				<line class="link" x1="213.9540743717177" y1="421.26362791881206" x2="122.6097127761608" y2="390.1117418485042" style="stroke-width: 4;"><title>Girlfriend / Boyfriend</title></line>
+				<line class="link" x1="148.76273877642987" y1="353.630923348952" x2="122.6097127761608" y2="390.1117418485042" style="stroke-width: 4;"><title>College Friend / College Friend</title></line>
+				<line class="link" x1="83.31525840202053" y1="339.2287704199915" x2="122.6097127761608" y2="390.1117418485042" style="stroke-width: 4;"><title>College Friend / College Friend</title></line>
+				<line class="link" x1="169.37933542689512" y1="386.641439616534" x2="122.6097127761608" y2="390.1117418485042" style="stroke-width: 4;"><title>Daughter / Father</title></line>
+				<line class="link" x1="169.37933542689512" y1="386.641439616534" x2="135.4205034461235" y2="432.8280836073473" style="stroke-width: 4;"><title>Sister / Brother</title></line>
+				<line class="link" x1="213.9540743717177" y1="421.26362791881206" x2="135.4205034461235" y2="432.8280836073473" style="stroke-width: 4;"><title>Mother / Daughter</title></line>
+				<line class="link" x1="122.6097127761608" y1="390.1117418485042" x2="135.4205034461235" y2="432.8280836073473" style="stroke-width: 4;"><title>Father / Son</title></line>
+				<line class="link" x1="600.1548641604392" y1="538.2992785965489" x2="543.1656853611701" y2="507.2818900804499" style="stroke-width: 4;"><title>PR Client / PR Representative</title></line>
+				<line class="link" x1="475.8860301127408" y1="593.6045850358122" x2="462.47572359617294" y2="524.4152901018583" style="stroke-width: 4;"><title>PR Client / PR Manager</title></line>
+				<line class="link" x1="475.8860301127408" y1="593.6045850358122" x2="427.0798257202777" y2="586.67576700729" style="stroke-width: 4;"><title>Employer / Representative</title></line>
+				<line class="link" x1="427.0798257202777" y1="586.67576700729" x2="462.47572359617294" y2="524.4152901018583" style="stroke-width: 4;"><title>PR Client / PR Manager</title></line>
+				<line class="link" x1="417.58538311856813" y1="456.39917549008845" x2="462.47572359617294" y2="524.4152901018583" style="stroke-width: 4;"><title>Daughter /  Mother</title></line>
+				<line class="link" x1="543.1656853611701" y1="507.2818900804499" x2="516.2391707452261" y2="560.6602811314206" style="stroke-width: 4;"><title>Interviewer / Interviewee</title></line>
+				<line class="link" x1="475.8860301127408" y1="593.6045850358122" x2="516.2391707452261" y2="560.6602811314206" style="stroke-width: 4;"><title>Kidnapper / Hostage</title></line>
+				<line class="link" x1="462.47572359617294" y1="524.4152901018583" x2="516.2391707452261" y2="560.6602811314206" style="stroke-width: 4;"><title>PR Manager / PR Prop</title></line>
+				<line class="link" x1="417.58538311856813" y1="456.39917549008845" x2="378.95563028543177" y2="356.03465955727756" style="stroke-width: 4;"><title>Assistant / Boss</title></line>
+				<line class="link" x1="228.26742547906053" y1="255.07407170842038" x2="254.28407963070725" y2="322.8082797720225" style="stroke-width: 4;"><title>Husband / Wife</title></line>
+				<line class="link" x1="228.26742547906053" y1="255.07407170842038" x2="188.97815977264423" y2="290.15422899033024" style="stroke-width: 4;"><title>Mother / Daughter</title></line>
+				<line class="link" x1="254.28407963070725" y1="322.8082797720225" x2="188.97815977264423" y2="290.15422899033024" style="stroke-width: 4;"><title>Father / Daughter</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="450.4145898973428" y2="400.10361942085126" style="stroke-width: 4;"><title>Father / Son</title></line>
+				<line class="link" x1="404.04637440594325" y1="256.7746924895242" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Lover / Lover</title></line>
+				<line class="link" x1="352.0217230040998" y1="93.85346731647597" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Girlfriend / Boyfriend</title></line>
+				<line class="link" x1="512.839024477999" y1="137.98070411984284" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Son / Father</title></line>
+				<line class="link" x1="488.21182734868523" y1="177.07752824683817" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Daughter / Father</title></line>
+				<line class="link" x1="488.21182734868523" y1="177.07752824683817" x2="512.839024477999" y2="137.98070411984284" style="stroke-width: 4;"><title>Sister / Brother</title></line>
+				<line class="link" x1="473.0256127064605" y1="79.57683027243978" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Travel Agent / Travel Partner</title></line>
+				<line class="link" x1="284.76912160411325" y1="68.21733987500902" x2="352.0217230040998" y2="93.85346731647597" style="stroke-width: 4;"><title>Safari Driver / Love Interest</title></line>
+				<line class="link" x1="434.7685596506648" y1="67.6676965707721" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Movie Actor / Soundtrack Creator</title></line>
+				<line class="link" x1="499.04049907210526" y1="106.4336293314081" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Bassist / Music Agent</title></line>
+				<line class="link" x1="376.82640355823423" y1="130.2685545821141" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Travel Partner / Travel Partner</title></line>
+				<line class="link" x1="398.67990092956836" y1="83.39678877395156" x2="434.90293924345633" y2="137.7828620360182" style="stroke-width: 4;"><title>Travel Partner / Travel Partner</title></line>
+				<line class="link" x1="398.67990092956836" y1="83.39678877395156" x2="376.82640355823423" y2="130.2685545821141" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="404.04637440594325" y1="256.7746924895242" x2="378.95563028543177" y2="356.03465955727756" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="213.9540743717177" y1="421.26362791881206" x2="261.45492290534634" y2="469.451751361843" style="stroke-width: 4;"><title>Client / Therapist</title></line>
+				<line class="link" x1="254.28407963070725" y1="322.8082797720225" x2="309.53158498330004" y2="291.04165413386244" style="stroke-width: 4;"><title>Promoter / Performer</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="367.58233670977586" y2="431.03919564629365" style="stroke-width: 4;"><title>Boss / Executive Producer</title></line>
+				<line class="link" x1="491.1179663937239" y1="442.4289390607278" x2="450.4145898973428" y2="400.10361942085126" style="stroke-width: 4;"><title>Mother / Son</title></line>
+				<line class="link" x1="416.7108913692965" y1="300.24561915012896" x2="365.79776929791086" y2="283.61228366938445" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="309.53158498330004" y1="291.04165413386244" x2="365.79776929791086" y2="283.61228366938445" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="365.79776929791086" y2="283.61228366938445" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="404.04637440594325" y2="256.7746924895242" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="334.6256111600414" y2="408.09679807769254" style="stroke-width: 4;"><title>Client / Marriage Counselor</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="439.68101124869924" y2="323.75346524533785" style="stroke-width: 4;"><title>Manager / Musician</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="485.0676110929073" y2="317.6916066490021" style="stroke-width: 4;"><title>Manager / Musician</title></line>
+				<line class="link" x1="554.8620608546896" y1="291.8840236265555" x2="485.0676110929073" y2="317.6916066490021" style="stroke-width: 4;"><title>Daughter / Mother</title></line>
+				<line class="link" x1="439.68101124869924" y1="323.75346524533785" x2="485.0676110929073" y2="317.6916066490021" style="stroke-width: 4;"><title>Sister / Sister</title></line>
+				<line class="link" x1="315.57840909037174" y1="346.9765564494752" x2="378.95563028543177" y2="356.03465955727756" style="stroke-width: 4;"><title>Drummer / Bassist</title></line>
+				<line class="link" x1="350.69282416273643" y1="310.597485568108" x2="378.95563028543177" y2="356.03465955727756" style="stroke-width: 4;"><title>Violinist / Bassist</title></line>
+				<line class="link" x1="309.53158498330004" y1="291.04165413386244" x2="315.57840909037174" y2="346.9765564494752" style="stroke-width: 4;"><title>Bandmate / Bandmate</title></line>
+				<line class="link" x1="350.69282416273643" y1="310.597485568108" x2="315.57840909037174" y2="346.9765564494752" style="stroke-width: 4;"><title>Bandmate / Bandmate</title></line>
+				<line class="link" x1="350.69282416273643" y1="310.597485568108" x2="309.53158498330004" y2="291.04165413386244" style="stroke-width: 4;"><title>Bandmate / Bandmate</title></line>
+				<line class="link" x1="224.07541633858258" y1="61.025683140707436" x2="284.76912160411325" y2="68.21733987500902" style="stroke-width: 4;"><title>Boss / Second in Command</title></line>
+				<line class="link" x1="282.38485991819886" y1="220.93960737002834" x2="309.53158498330004" y2="291.04165413386244" style="stroke-width: 4;"><title>Fishing Friend / Fishing Friend</title></line>
+				<line class="link" x1="637.3432007315009" y1="392.9801983624393" x2="573.7577280000588" y2="413.48740128247755" style="stroke-width: 4;"><title>Husband / Wife</title></line>
+				<line class="link" x1="491.1179663937239" y1="442.4289390607278" x2="573.7577280000588" y2="413.48740128247755" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="491.1179663937239" y1="442.4289390607278" x2="558.0465222686045" y2="456.5754984594298" style="stroke-width: 4;"><title>Neighbor / Neighbor</title></line>
+				<line class="link" x1="158.95246067277134" y1="433.93112693376884" x2="122.6097127761608" y2="390.1117418485042" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<line class="link" x1="136.18583996368446" y1="480.8914107225487" x2="213.9540743717177" y2="421.26362791881206" style="stroke-width: 4;"><title>Mother / Daughter</title></line>
+				<line class="link" x1="136.18583996368446" y1="480.8914107225487" x2="79.5292196127025" y2="517.2602024272777" style="stroke-width: 4;"><title>Wife / Second Husband</title></line>
+				<line class="link" x1="207.8041340163067" y1="599.4208549125145" x2="226.6152286065919" y2="533.2572518877696" style="stroke-width: 4;"><title>Wife / Husband</title></line>
+				<line class="link" x1="207.8041340163067" y1="599.4208549125145" x2="257.75227156742466" y2="596.3755713815748" style="stroke-width: 4;"><title>Mother / Son</title></line>
+				<line class="link" x1="226.6152286065919" y1="533.2572518877696" x2="257.75227156742466" y2="596.3755713815748" style="stroke-width: 4;"><title>Father / Son</title></line>
+				<line class="link" x1="184.83308817714516" y1="488.4190106285469" x2="213.9540743717177" y2="421.26362791881206" style="stroke-width: 4;"><title>Father / Daughter</title></line>
+				<line class="link" x1="184.83308817714516" y1="488.4190106285469" x2="136.18583996368446" y2="480.8914107225487" style="stroke-width: 4;"><title>First Husband / Wife</title></line>
+				<line class="link" x1="213.9540743717177" y1="421.26362791881206" x2="226.38946704471746" y2="487.25051718159443" style="stroke-width: 4;"><title>Lover / Lover</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="412.84106950929925" y2="406.69513124553737" style="stroke-width: 4;"><title>Father / Daughter</title></line>
+				<line class="link" x1="378.95563028543177" y1="356.03465955727756" x2="447.9330626260593" y2="363.64324159259945" style="stroke-width: 4;"><title>Husband / Wife</title></line>
+				<line class="link" x1="447.9330626260593" y1="363.64324159259945" x2="412.84106950929925" y2="406.69513124553737" style="stroke-width: 4;"><title>Mother / Daughter</title></line>
+				<line class="link" x1="195.87032688655393" y1="257.3880247659131" x2="254.28407963070725" y2="322.8082797720225" style="stroke-width: 4;"><title>Friend / Friend</title></line>
+				<g class="node" transform="translate(213.9540743717177,421.26362791881206)"><circle r="10" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Sasha</text></g>
+				<g class="node" transform="translate(378.95563028543177,356.03465955727756)"><circle r="10" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Bennie</text></g>
+				<g class="node" transform="translate(416.7108913692965,300.24561915012896)"><circle r="10" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Rhea</text></g>
+				<g class="node" transform="translate(404.04637440594325,256.7746924895242)"><circle r="10" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Jocelyn</text></g>
+				<g class="node" transform="translate(309.53158498330004,291.04165413386244)"><circle r="10" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Scotty</text></g>
+				<g class="node" transform="translate(491.1179663937239,442.4289390607278)"><circle r="10" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Stephanie</text></g>
+				<g class="node" transform="translate(462.47572359617294,524.4152901018583)"><circle r="10" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">La Doll</text></g>
+				<g class="node" transform="translate(543.1656853611701,507.2818900804499)"><circle r="10" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Jules</text></g>
+				<g class="node" transform="translate(158.95246067277134,433.93112693376884)"><circle r="10" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Rob</text></g>
+				<g class="node" transform="translate(226.6152286065919,533.2572518877696)"><circle r="10" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Ted Hollander</text></g>
+				<g class="node" transform="translate(169.37933542689512,386.641439616534)"><circle r="10" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Alison</text></g>
+				<g class="node" transform="translate(254.28407963070725,322.8082797720225)"><circle r="10" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Alex</text></g>
+				<g class="node" transform="translate(148.76273877642987,353.630923348952)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Lizzie</text></g>
+				<g class="node" transform="translate(83.31525840202053,339.2287704199915)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Bix</text></g>
+				<g class="node" transform="translate(122.6097127761608,390.1117418485042)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Drew</text></g>
+				<g class="node" transform="translate(135.4205034461235,432.8280836073473)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Lincoln</text></g>
+				<g class="node" transform="translate(600.1548641604392,538.2992785965489)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Bosco</text></g>
+				<g class="node" transform="translate(417.58538311856813,456.39917549008845)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Lulu</text></g>
+				<g class="node" transform="translate(475.8860301127408,593.6045850358122)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">The General</text></g>
+				<g class="node" transform="translate(427.0798257202777,586.67576700729)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Arc</text></g>
+				<g class="node" transform="translate(516.2391707452261,560.6602811314206)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Kitty Jackson</text></g>
+				<g class="node" transform="translate(228.26742547906053,255.07407170842038)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Rebecca</text></g>
+				<g class="node" transform="translate(188.97815977264423,290.15422899033024)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Cora-Ann</text></g>
+				<g class="node" transform="translate(450.4145898973428,400.10361942085126)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Chris</text></g>
+				<g class="node" transform="translate(434.90293924345633,137.7828620360182)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Lou</text></g>
+				<g class="node" transform="translate(352.0217230040998,93.85346731647597)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Mindy</text></g>
+				<g class="node" transform="translate(512.839024477999,137.98070411984284)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Rolph</text></g>
+				<g class="node" transform="translate(488.21182734868523,177.07752824683817)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Charlie</text></g>
+				<g class="node" transform="translate(473.0256127064605,79.57683027243978)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Cora</text></g>
+				<g class="node" transform="translate(284.76912160411325,68.21733987500902)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Albert</text></g>
+				<g class="node" transform="translate(434.7685596506648,67.6676965707721)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Dean</text></g>
+				<g class="node" transform="translate(499.04049907210526,106.4336293314081)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Chronos</text></g>
+				<g class="node" transform="translate(376.82640355823423,130.2685545821141)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Fiona</text></g>
+				<g class="node" transform="translate(398.67990092956836,83.39678877395156)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Mildred</text></g>
+				<g class="node" transform="translate(261.45492290534634,469.451751361843)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Coz</text></g>
+				<g class="node" transform="translate(367.58233670977586,431.03919564629365)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Collette</text></g>
+				<g class="node" transform="translate(365.79776929791086,283.61228366938445)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Alice</text></g>
+				<g class="node" transform="translate(334.6256111600414,408.09679807769254)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Dr Beet</text></g>
+				<g class="node" transform="translate(439.68101124869924,323.75346524533785)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Chandra</text></g>
+				<g class="node" transform="translate(554.8620608546896,291.8840236265555)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Olivia</text></g>
+				<g class="node" transform="translate(485.0676110929073,317.6916066490021)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Louisa</text></g>
+				<g class="node" transform="translate(315.57840909037174,346.9765564494752)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Joel</text></g>
+				<g class="node" transform="translate(350.69282416273643,310.597485568108)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Marty</text></g>
+				<g class="node" transform="translate(224.07541633858258,61.025683140707436)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Ramsey</text></g>
+				<g class="node" transform="translate(282.38485991819886,220.93960737002834)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Dave</text></g>
+				<g class="node" transform="translate(637.3432007315009,392.9801983624393)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Clay</text></g>
+				<g class="node" transform="translate(573.7577280000588,413.48740128247755)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Kathy</text></g>
+				<g class="node" transform="translate(558.0465222686045,456.5754984594298)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Noreen</text></g>
+				<g class="node" transform="translate(136.18583996368446,480.8914107225487)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Beth</text></g>
+				<g class="node" transform="translate(79.5292196127025,517.2602024272777)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Hammer</text></g>
+				<g class="node" transform="translate(207.8041340163067,599.4208549125145)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Susan</text></g>
+				<g class="node" transform="translate(257.75227156742466,596.3755713815748)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Alfred</text></g>
+				<g class="node" transform="translate(184.83308817714516,488.4190106285469)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Andy Grady</text></g>
+				<g class="node" transform="translate(226.38946704471746,487.25051718159443)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Wade</text></g>
+				<g class="node" transform="translate(412.84106950929925,406.69513124553737)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Ava</text></g>
+				<g class="node" transform="translate(447.9330626260593,363.64324159259945)"><circle r="5" style="fill: rgb(247, 182, 210);"></circle><text dx="8" dy=".35em" class="nodetext">Lupa</text></g>
+				<g class="node" transform="translate(195.87032688655393,257.3880247659131)"><circle r="5" style="fill: rgb(174, 199, 232);"></circle><text dx="8" dy=".35em" class="nodetext">Zeus</text></g>
+			</svg>
+		</div>
+		<div id="main">
+			<h1>A Visit From The Goon Squad</h1>
+			<span class="gray">By <a href="http://jenniferegan.com/">Jennifer Egan</a></span>
+			<h1>Interactive Character Map</h1>
+			<span class="gray">By <a href="http://www.filosophy.org">Fil Zembowicz</a></span>
+			<div class="divider"></div>
+			<p>Here, relationships between characters in the novel are displayed. By moving the slider below, you can set what place in the book is displayed. Hover over a connection to discover the relationship. Characters are introduced by the first page on which they are mentioned</p><div class="divider"></div><p>Set page below<span class="gray"> OR </span><span id="advance" class="button">auto-advance</span></p>
+			<div id="page_back">
+				<div id="page">
+					<span id="page_value">340</span>
+					<span class="page_max"> / 340</span>
+					<span id="hint">drag left and right</span>
+				</div>
+			</div>
+			<div class="divider"></div>
+			<table>
+				<colgroup>
+					<col style="padding:15px;">
+						<col>
+							<col style="padding:15px;">
+								<col>
+				</colgroup>
+			</table>
+			<div class="divider"></div>
+			<span class="gray">Built with the <a href="http://mbostock.github.com/d3/">D3</a> visualization library</span>
+		</div>
+		<script type="text/javascript" src="force.min.js"></script>
+	</body>
+</html>

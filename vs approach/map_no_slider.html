@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>Syd Character Map</title>
+</head>
+<body>
+    <svg width="960" height="600"></svg>
+    <script>
+        var svg = d3.select("svg");
+        var width = svg.attr("width");
+        var height = svg.attr("height");
+
+        var nodes = [
+        {name: "Sydney", gender: "pink", "era": 0, x1: 50, y1: 50},
+        {name: "David", gender: "#5599ff", "era": 2},
+        {name: "Kevin", gender: "pink", "era": 1},
+        {name: "Wyatt", gender: "#5599ff", "era": 3},
+        {name: "Zoe", gender: "pink", "era": 1},
+        {name: "Shannon", gender: "pink", "era": 1},
+        {name: "Hannah Good", gender: "pink", "era": 4},
+        {name: "Nathan", gender: "#5599ff", "era": 4},
+        {name: "Natalia", gender: "pink", "era": 5},
+        {name: "Hannah Brauer", gender: "pink", "era": 1},
+        {name: "Marina", gender: "pink", "era": 3},
+        {name: "Jeff", gender: "#5599ff", "era": 4},
+        {name: "Fox", gender: "#a020f0", "era": 6},
+        {name: "Molly", gender: "pink", "era": 5},
+        {name: "Rads", gender: "pink", "era": 3},
+        {name: "RJ", gender: "#5599ff", "era": 4},
+        {name: "Alexandra", gender: "pink", "era": 2},
+        {name: "Niko", gender: "#5599ff", "era": 3},
+        {name: "Riley", gender: "#5599ff", "era": 2},
+        {name: "Ted", gender: "#5599ff", "era": 3},
+        {name: "Bailey", gender: "pink", "era": 4},
+        {name: "Mauri", gender: "pink", "era": 4},
+        {name: "Evan", gender: "pink", "era": 4},
+        {name: "Graham", gender: "#5599ff", "era": 4},
+        {name: "Yenny", gender: "pink", "era": 5},
+        {name: "Abby", gender: "pink", "era": 3},
+        {name: "Jack", gender: "#fa8072", "era": 3},
+        {name: "Alissa", gender: "pink", "era": 1},
+        {name: "Adam", gender: "#5599ff", "era": 2},
+        {name: "Josh", gender: "#5599ff", "era": 3},
+        {name: "Maria", gender: "pink", "era": 3},
+        {name: "Veronica", gender: "pink", "era": 1},
+        {name: "Jackie", gender: "pink", "era": 1},
+        {name: "Nina", gender: "pink", "era": 1},
+        {name: "Rebekah", gender: "pink", "era": 3},
+        {name: "Seth", gender: "#5599ff", "era": 3},
+        {name: "Trevor", gender: "#5599ff", "era": 3},
+        {name: "Vern", gender: "pink", "era": 3},
+        {name: "Ben", gender: "#5599ff", "era": 3},
+        {name: "Annelise", gender: "pink", "era": 3},
+        {name: "Zach", gender: "#5599ff", "era": 3},
+        {name: "Thejas", gender: "#5599ff", "era": 3},
+        {name: "Gian", gender: "pink", "era": 3},
+        {name: "Macarena", gender: "pink", "era": 5},
+        {name: "Jack Fraiser", gender: "#5599ff", "era": 3},
+        {name: "Madeleine", gender: "pink", "era": 3},
+        {name: "Brielle", gender: "pink", "era": 3},
+        {name: "Sara", gender: "pink", "era": 4},
+        {name: "Jordan", gender: "#5599ff", "era": 3},
+        {name: "Alison Elgass", gender: "pink", "era": 3},
+        {name: "Fion", gender: "pink", "era": 3},
+        {name: "Christine", gender: "pink", "era": 3},
+        {name: "Makayla", gender: "pink", "era": 3}
+        ];
+
+        var links = [
+        {source: "Sydney", target: "David", close: 300},
+        //David knows UM
+        //{source: "David", target: "Marina", close: 150},
+        //{source: "David", target: "Rads", close: 150},
+        //{source: "David", target: "Niko", close: 150},
+        //{source: "David", target: "Ted", close: 150},
+        //{source: "David", target: "Abby", close: 150},
+        //{source: "David", target: "Jack", close: 150},
+        //{source: "David", target: "Adam", close: 150},
+        //{source: "David", target: "Maria", close: 150},
+        //{source: "David", target: "Rebekah", close: 150},
+        //{source: "David", target: "Seth", close: 150},
+        //{source: "David", target: "Trevor", close: 150},
+        //{source: "David", target: "Vern", close: 150},
+        //{source: "David", target: "Ben", close: 150},
+        //{source: "David", target: "Annelise", close: 150},
+        //{source: "David", target: "Zach", close: 150},
+        //{source: "David", target: "Thejas", close: 300},
+        //{source: "David", target: "Gian", close: 150},
+        //{source: "David", target: "Brielle", close: 150},
+        //{source: "David", target: "Jordan", close: 300},
+        //{source: "David", target: "Madeleine", close: 300},
+        //{source: "David", target: "Jack Fraiser", close: 300},
+        //David knows Pre A
+        //{source: "David", target: "Nina", close: 300},
+        //{source: "David", target: "Shannon", close: 300},
+        //{source: "David", target: "Jackie", close: 300},
+        //{source: "David", target: "Kevin", close: 300},
+        //{source: "David", target: "Veronica", close: 300},
+        //David knows HS
+        //{source: "David", target: "Wyatt", close: 50},
+        //{source: "David", target: "Alexandra", close: 50},
+        //{source: "David", target: "Adam", close: 50},
+        //{source: "David", target: "Riley", close: 50},
+        {source: "Sydney", target: "Kevin", close: 250},
+        //Kevin knows HS
+        //{source: "Kevin", target: "David", close: 50},
+        //{source: "Kevin", target: "Wyatt", close: 50},
+        //{source: "Kevin", target: "Alexandra", close: 70},
+        //{source: "Kevin", target: "Adam", close: 70},
+        //{source: "Kevin", target: "Riley", close: 50},
+        //Kevin knows Pre A
+        //{source: "Kevin", target: "Nina", close: 50},
+        //{source: "Kevin", target: "Shannon", close: 50},
+        //{source: "Kevin", target: "Jackie", close: 50},
+        //{source: "Kevin", target: "Hannah Brauer", close: 50},
+        //{source: "Kevin", target: "Zoe", close: 50},
+        //{source: "Kevin", target: "Alissa", close: 50},
+        //{source: "Kevin", target: "Veronica", close: 50},
+        {source: "Sydney", target: "Wyatt", close: 150},
+        //Wyatt knows HS
+        {source: "Wyatt", target: "David", close: 50},
+        {source: "Wyatt", target: "Alexandra", close: 50},
+        {source: "Wyatt", target: "Adam", close: 50},
+        //{source: "Wyatt", target: "Riley", close: 50},
+        {source: "Wyatt", target: "Nina", close: 70},
+        {source: "Wyatt", target: "Shannon", close: 70},
+        {source: "Wyatt", target: "Jackie", close: 70},
+        {source: "Wyatt", target: "Kevin", close: 70},
+        {source: "Wyatt", target: "Veronica", close: 70},
+        {source: "Sydney", target: "Zoe", close: 50},
+        //Zoe knows UM
+        {source: "Zoe", target: "Marina", close: 150},
+        {source: "Zoe", target: "Rads", close: 150},
+        {source: "Zoe", target: "Niko", close: 150},
+        {source: "Zoe", target: "Ted", close: 150},
+        {source: "Zoe", target: "Abby", close: 150},
+        {source: "Zoe", target: "Adam", close: 150},
+        {source: "Zoe", target: "Josh", close: 150},
+        {source: "Zoe", target: "Maria", close: 150},
+        {source: "Zoe", target: "Rebekah", close: 150},
+        {source: "Zoe", target: "Seth", close: 150},
+        {source: "Zoe", target: "Trevor", close: 150},
+        {source: "Zoe", target: "Vern", close: 150},
+        {source: "Zoe", target: "Ben", close: 150},
+        //{source: "Zoe", target: "Annelise", close: 150},
+        {source: "Zoe", target: "Zach", close: 150},
+        {source: "Zoe", target: "Thejas", close: 150},
+        //{source: "Zoe", target: "Gian", close: 150},
+        //{source: "Zoe", target: "Brielle", close: 150},
+        //{source: "Zoe", target: "Jordan", close: 300},
+        //{source: "Zoe", target: "Madeleine", close: 300},
+        //{source: "Zoe", target: "Jack Fraiser", close: 300},
+        //Zoe knows HS
+        {source: "Zoe", target: "David", close: 150},
+        {source: "Zoe", target: "Wyatt", close: 150},
+        {source: "Zoe", target: "Alexandra", close: 150},
+        //{source: "Zoe", target: "Riley", close: 50},
+        //Zoe knows Pre A
+        //{source: "Zoe", target: "Nina", close: 50},
+        //{source: "Zoe", target: "Shannon", close: 50},
+        //{source: "Zoe", target: "Jackie", close: 50},
+        //{source: "Zoe", target: "Hannah Brauer", close: 50},
+        //{source: "Zoe", target: "Kevin", close: 50},
+        //{source: "Zoe", target: "Alissa", close: 50},
+        //{source: "Zoe", target: "Veronica", close: 50},
+        {source: "Sydney", target: "Shannon", close: 50},
+        //Shannon knows HS
+        {source: "Shannon", target: "Wyatt", close: 50},
+        {source: "Shannon", target: "Adam", close: 50},
+        //{source: "Shannon", target: "Riley", close: 50},
+        //Shannon knows Pre A
+        //{source: "Shannon", target: "Nina", close: 50},
+        //{source: "Shannon", target: "Jackie", close: 50},
+        //{source: "Shannon", target: "Hannah Brauer", close: 50},
+        //{source: "Shannon", target: "Kevin", close: 50},
+        //{source: "Shannon", target: "Zoe", close: 50},
+        //{source: "Shannon", target: "Alissa", close: 50},
+        //{source: "Shannon", target: "Veronica", close: 50},
+        {source: "Sydney", target: "Hannah Good", close: 200},
+        //Hannah Good knows int
+        {source: "Hannah Good", target: "Nathan", close: 50},
+        {source: "Sydney", target: "Nathan", close: 250},
+        {source: "Sydney", target: "Natalia", close: 150},
+        {source: "Sydney", target: "Hannah Brauer", close: 50},
+        //Hannah knows UM
+        {source: "Hannah Brauer", target: "Marina", close: 150},
+        {source: "Hannah Brauer", target: "Rads", close: 150},
+        {source: "Hannah Brauer", target: "Niko", close: 150},
+        {source: "Hannah Brauer", target: "Ted", close: 150},
+        {source: "Hannah Brauer", target: "Abby", close: 150},
+        {source: "Hannah Brauer", target: "Adam", close: 150},
+        {source: "Hannah Brauer", target: "Josh", close: 150},
+        {source: "Hannah Brauer", target: "Maria", close: 150},
+        {source: "Hannah Brauer", target: "Rebekah", close: 150},
+        {source: "Hannah Brauer", target: "Seth", close: 150},
+        {source: "Hannah Brauer", target: "Trevor", close: 150},
+        //{source: "Hannah Brauer", target: "Vern", close: 150},
+        {source: "Hannah Brauer", target: "Ben", close: 150},
+        //{source: "Hannah Brauer", target: "Annelise", close: 150},
+        {source: "Hannah Brauer", target: "Zach", close: 150},
+        //{source: "Hannah Brauer", target: "Thejas", close: 150},
+        //{source: "Hannah Brauer", target: "Gian", close: 150},
+        //{source: "Hannah Brauer", target: "Brielle", close: 150},
+        //{source: "Hannah Brauer", target: "Jordan", close: 300},
+        //{source: "Hannah Brauer", target: "Madeleine", close: 300},
+        //{source: "Hannah Brauer", target: "Jack Fraiser", close: 300},
+        //Hannah knows HS
+        {source: "Hannah Brauer", target: "David", close: 150},
+        {source: "Hannah Brauer", target: "Wyatt", close: 150},
+        {source: "Hannah Brauer", target: "Alexandra", close: 150},
+        {source: "Hannah Brauer", target: "Adam", close: 150},
+        {source: "Hannah Brauer", target: "Riley", close: 150},
+        //Hanna knows Pre A
+        //{source: "Hannah Brauer", target: "Nina", close: 50},
+        //{source: "Hannah Brauer", target: "Shannon", close: 50},
+        //{source: "Hannah Brauer", target: "Jackie", close: 50},
+        //{source: "Hannah Brauer", target: "Kevin", close: 50},
+        //{source: "Hannah Brauer", target: "Zoe", close: 50},
+        //{source: "Hannah Brauer", target: "Alissa", close: 50},
+        //{source: "Hannah Brauer", target: "Veronica", close: 50},
+        {source: "Sydney", target: "Marina", close: 50},
+        //Marina knows UM (s group)
+        //{source: "Marina", target: "Abby", close: 50},
+        //{source: "Marina", target: "Annelise", close: 50},
+        //{source: "Marina", target: "Thejas", close: 50},
+        //{source: "Marina", target: "Madeleine", close: 50},
+        //{source: "Marina", target: "Zach", close: 50},
+        //{source: "Marina", target: "Rads", close: 50},
+        //{source: "Marina", target: "Rebekah", close: 50},
+        //{source: "Sydney", target: "Alissa", close: 50},
+        //{source: "Sydney", target: "Jeff", close: 300},
+        {source: "Sydney", target: "Fox", close: 30},
+        //Fox knows NY and INT
+        {source: "Fox", target: "Alexandra", close: 50},
+        {source: "Fox", target: "Natalia", close: 250},
+        {source: "Fox", target: "Molly", close: 50},
+        {source: "Fox", target: "Mauri", close: 250},
+        {source: "Fox", target: "Nathan", close: 150},
+        {source: "Fox", target: "Jeff", close: 250},
+        {source: "Fox", target: "RJ", close: 200},
+        {source: "Fox", target: "Bailey", close: 200},
+        {source: "Fox", target: "Evan", close: 150},
+        {source: "Fox", target: "Graham", close: 150},
+        {source: "Sydney", target: "Molly", close: 50},
+        {source: "Sydney", target: "Rads", close: 150},
+        //Rads knows UM (s group)
+        //{source: "Rads", target: "Abby", close: 50},
+        //{source: "Rads", target: "Marina", close: 50},
+        //{source: "Rads", target: "Annelise", close: 50},
+        //{source: "Rads", target: "Thejas", close: 50},
+        //{source: "Rads", target: "Madeleine", close: 50},
+        //{source: "Rads", target: "Zach", close: 50},
+        //{source: "Rads", target: "Rebekah", close: 50},
+        {source: "Sydney", target: "RJ", close: 260},
+        {source: "Sydney", target: "Alexandra", close: 50},
+        //Alexandra knows UM
+        {source: "Alexandra", target: "Molly", close: 150},
+        {source: "Alexandra", target: "Marina", close: 150},
+        {source: "Alexandra", target: "Rads", close: 150},
+        {source: "Alexandra", target: "Niko", close: 150},
+        {source: "Alexandra", target: "Ted", close: 150},
+        {source: "Alexandra", target: "Abby", close: 150},
+        {source: "Alexandra", target: "Adam", close: 150},
+        {source: "Alexandra", target: "Maria", close: 150},
+        {source: "Alexandra", target: "Rebekah", close: 150},
+        {source: "Alexandra", target: "Seth", close: 150},
+        {source: "Alexandra", target: "Trevor", close: 150},
+        //{source: "Alexandra", target: "Vern", close: 150},
+        {source: "Alexandra", target: "Ben", close: 150},
+        //{source: "Alexandra", target: "Annelise", close: 150},
+        {source: "Alexandra", target: "Zach", close: 150},
+        //{source: "Alexandra", target: "Thejas", close: 300},
+        //{source: "Alexandra", target: "Gian", close: 300},
+        //{source: "Alexandra", target: "Brielle", close: 300},
+        //{source: "Alexandra", target: "Jordan", close: 300},
+        //{source: "Alexandra", target: "Madeleine", close: 300},
+        //{source: "Alexandra", target: "Jack Fraiser", close: 300},
+        //Alexandra knows Pre A
+        {source: "Alexandra", target: "Nina", close: 150},
+        {source: "Alexandra", target: "Shannon", close: 150},
+        {source: "Alexandra", target: "Jackie", close: 150},
+        {source: "Alexandra", target: "Kevin", close: 150},
+        {source: "Alexandra", target: "Veronica", close: 150},
+        //Alexandra knows HS
+        //{source: "Alexandra", target: "David", close: 50},
+        //{source: "Alexandra", target: "Wyatt", close: 50},
+        //{source: "Alexandra", target: "Riley", close: 50},
+        {source: "Sydney", target: "Niko", close: 50},
+        //Niko knows UM (art group)
+        //{source: "Niko", target: "Josh", close: 150},
+        //{source: "Niko", target: "Brielle", close: 150},
+        //{source: "Niko", target: "Trevor", close: 150},
+        //{source: "Niko", target: "Vern", close: 150},
+        {source: "Niko", target: "Ted", close: 30},
+        //{source: "Niko", target: "Ben", close: 150},
+        //{source: "Niko", target: "Seth", close: 150},
+        //{source: "Niko", target: "Jack Fraiser", close: 300},
+        //{source: "Niko", target: "Jordan", close: 300},
+        //{source: "Niko", target: "Gian", close: 300},
+        //{source: "Niko", target: "Maria", close: 300},
+        {source: "Sydney", target: "Riley", close: 300},
+        //Riley knows HS
+        //{source: "Riley", target: "David", close: 300},
+        //{source: "Riley", target: "Wyatt", close: 300},
+        //{source: "Riley", target: "Alexandra", close: 300},
+        //{source: "Riley", target: "Adam", close: 300},
+        //{source: "Riley", target: "Nina", close: 70},
+        //{source: "Riley", target: "Shannon", close: 70},
+        //{source: "Riley", target: "Jackie", close: 70},
+        //{source: "Riley", target: "Kevin", close: 70},
+        //{source: "Riley", target: "Veronica", close: 70},
+        {source: "Sydney", target: "Ted", close: 50},
+        //Ted knows UM (art group)
+        //{source: "Ted", target: "Josh", close: 150},
+        //{source: "Ted", target: "Brielle", close: 150},
+        //{source: "Ted", target: "Trevor", close: 150},
+        //{source: "Ted", target: "Vern", close: 150},
+        //{source: "Ted", target: "Ben", close: 150},
+        //{source: "Ted", target: "Seth", close: 150},
+        //{source: "Ted", target: "Jack Fraiser", close: 300},
+        //{source: "Ted", target: "Jordan", close: 300},
+        //{source: "Ted", target: "Gian", close: 300},
+        //{source: "Ted", target: "Niko", close: 170},
+        //{source: "Ted", target: "Maria", close: 300},
+        {source: "Sydney", target: "Bailey", close: 250},
+        {source: "Sydney", target: "Graham", close: 200},
+        {source: "Sydney", target: "Mauri", close: 240},
+        {source: "Sydney", target: "Evan", close: 150},
+        {source: "Sydney", target: "Yenny", close: 150},
+        {source: "Sydney", target: "Abby", close: 50},
+        //Abby knows UM (s group)
+        //{source: "Abby", target: "Marina", close: 50},
+        //{source: "Abby", target: "Annelise", close: 150},
+        //{source: "Abby", target: "Thejas", close: 300},
+        //{source: "Abby", target: "Madeleine", close: 150},
+        //{source: "Abby", target: "Zach", close: 50},
+        //{source: "Abby", target: "Rads", close: 150},
+        //{source: "Abby", target: "Rebekah", close: 150},
+        //Abby knows Molly
+        {source: "Abby", target: "Molly", close: 50},
+        {source: "Sydney", target: "Jack", close: 60},
+        //Jack knows Pre A
+        //{source: "Jack", target: "Nina", close: 300},
+        //{source: "Jack", target: "Jackie", close: 300},
+        {source: "Jack", target: "Shannon", close: 200},
+        {source: "Jack", target: "Hannah Brauer", close: 200},
+        //{source: "Jack", target: "Kevin", close: 300},
+        {source: "Jack", target: "Zoe", close: 300},
+        {source: "Jack", target: "Alissa", close: 300},
+        //{source: "Jack", target: "Veronica", close: 300},
+        //Jack knows HS
+        //{source: "Jack", target: "David", close: 300},
+        //{source: "Jack", target: "Wyatt", close: 300},
+        {source: "Jack", target: "Alexandra", close: 250},
+        //{source: "Jack", target: "Adam", close: 300},
+        //{source: "Jack", target: "Riley", close: 300},
+        //Jack knows UM (s group)
+        {source: "Jack", target: "Abby", close: 50},
+        {source: "Jack", target: "Marina", close: 50},
+        //{source: "Jack", target: "Annelise", close: 50},
+        //{source: "Jack", target: "Thejas", close: 50},
+        //{source: "Jack", target: "Zach", close: 50},
+        //{source: "Jack", target: "Rads", close: 50},
+        //{source: "Jack", target: "Rebekah", close: 50},
+        //Jack knows UM (art group)
+        //{source: "Jack", target: "Josh", close: 150},
+        //{source: "Jack", target: "Brielle", close: 150},
+        //{source: "Jack", target: "Trevor", close: 150},
+        //{source: "Jack", target: "Vern", close: 150},
+        {source: "Jack", target: "Ted", close: 150},
+        //{source: "Jack", target: "Ben", close: 150},
+        //{source: "Jack", target: "Seth", close: 150},
+        //{source: "Jack", target: "Jack Fraiser", close: 300},
+        //{source: "Jack", target: "Jordan", close: 300},
+        //{source: "Jack", target: "Gian", close: 300},
+        {source: "Jack", target: "Niko", close: 250},
+        {source: "Jack", target: "Maria", close: 300},
+        //Alissa knows UM 
+        {source: "Alissa", target: "Marina", close: 150},
+        {source: "Alissa", target: "Rads", close: 150},
+        {source: "Alissa", target: "Niko", close: 150},
+        {source: "Alissa", target: "Ted", close: 150},
+        {source: "Alissa", target: "Abby", close: 150},
+        {source: "Alissa", target: "Adam", close: 50},
+        {source: "Alissa", target: "Josh", close: 150},
+        {source: "Alissa", target: "Maria", close: 150},
+        {source: "Alissa", target: "Rebekah", close: 150},
+        {source: "Alissa", target: "Seth", close: 150},
+        {source: "Alissa", target: "Trevor", close: 150},
+        //{source: "Alissa", target: "Vern", close: 150},
+        {source: "Alissa", target: "Ben", close: 150},
+        //{source: "Alissa", target: "Annelise", close: 300},
+        {source: "Alissa", target: "Zach", close: 150},
+        //{source: "Alissa", target: "Thejas", close: 300},
+        //{source: "Alissa", target: "Gian", close: 300},
+        //{source: "Alissa", target: "Brielle", close: 150},
+        //{source: "Alissa", target: "Jordan", close: 300},
+        //{source: "Alissa", target: "Madeleine", close: 300},
+        //{source: "Alissa", target: "Jack Fraiser", close: 300},
+        //Alissa knows HS
+        {source: "Alissa", target: "David", close: 50},
+        {source: "Alissa", target: "Wyatt", close: 50},
+        {source: "Alissa", target: "Alexandra", close: 50},
+        {source: "Alissa", target: "Adam", close: 50},
+        //{source: "Alissa", target: "Riley", close: 50},
+        //Alissa knows Pre A
+        //{source: "Alissa", target: "Nina", close: 50},
+        //{source: "Alissa", target: "Shannon", close: 50},
+        //{source: "Alissa", target: "Jackie", close: 50},
+        //{source: "Alissa", target: "Hannah Brauer", close: 50},
+        //{source: "Alissa", target: "Kevin", close: 50},
+        //{source: "Alissa", target: "Zoe", close: 50},
+        //{source: "Alissa", target: "Veronica", close: 50},
+        {source: "Sydney", target: "Adam", close: 50},
+        //Adam knows UM (s group)
+        //{source: "Adam", target: "Marina", close: 300},
+        //{source: "Adam", target: "Rads", close: 300},
+        //{source: "Adam", target: "Niko", close: 70},
+        //{source: "Adam", target: "Ted", close: 70},
+        //{source: "Adam", target: "Abby", close: 300},
+        //{source: "Adam", target: "Maria", close: 70},
+        //{source: "Adam", target: "Rebekah", close: 300},
+        //{source: "Adam", target: "Seth", close: 70},
+        //{source: "Adam", target: "Trevor", close: 70},
+        //{source: "Adam", target: "Vern", close: 70},
+        //{source: "Adam", target: "Ben", close: 70},
+        //{source: "Adam", target: "Annelise", close: 300},
+        //{source: "Adam", target: "Zach", close: 300},
+        //{source: "Adam", target: "Gian", close: 70},
+        //{source: "Adam", target: "Brielle", close: 70},
+        //{source: "Adam", target: "Jordan", close: 70},
+        //{source: "Adam", target: "Madeleine", close: 300},
+        //{source: "Adam", target: "Jack Fraiser", close: 300},
+        //Adam knows Pre A
+        //{source: "Adam", target: "Jackie", close: 300},
+        //{source: "Adam", target: "Kevin", close: 300},
+        //{source: "Adam", target: "Veronica", close: 300},
+        {source: "Sydney", target: "Josh", close: 150},
+        //Josh knows UM (art group)
+        //{source: "Josh", target: "Brielle", close: 150},
+        //{source: "Josh", target: "Trevor", close: 150},
+        //{source: "Josh", target: "Vern", close: 150},
+        //{source: "Josh", target: "Ted", close: 150},
+        //{source: "Josh", target: "Ben", close: 150},
+        //{source: "Josh", target: "Seth", close: 150},
+        //{source: "Josh", target: "Jack Fraiser", close: 150},
+        //{source: "Josh", target: "Jordan", close: 150},
+        //{source: "Josh", target: "Gian", close: 150},
+        //{source: "Josh", target: "Niko", close: 150},
+        //{source: "Josh", target: "Maria", close: 150},
+        {source: "Sydney", target: "Maria", close: 50},
+        //Maria knows UM (art group)
+        //{source: "Maria", target: "Josh", close: 150},
+        //{source: "Maria", target: "Brielle", close: 150},
+        //{source: "Maria", target: "Trevor", close: 150},
+        //{source: "Maria", target: "Vern", close: 150},
+        //{source: "Maria", target: "Ted", close: 150},
+        //{source: "Maria", target: "Ben", close: 150},
+        //{source: "Maria", target: "Seth", close: 150},
+        //{source: "Maria", target: "Jack Fraiser", close: 150},
+        //{source: "Maria", target: "Jordan", close: 150},
+        //{source: "Maria", target: "Gian", close: 150},
+        //{source: "Maria", target: "Niko", close: 150},
+        {source: "Sydney", target: "Veronica", close: 210},
+        //Veronica knows HS
+        //{source: "Veronica", target: "David", close: 50},
+        //{source: "Veronica", target: "Wyatt", close: 50},
+        //{source: "Veronica", target: "Alexandra", close: 70},
+        //{source: "Veronica", target: "Adam", close: 70},
+        //{source: "Veronica", target: "Riley", close: 300},
+        //Veronica knows Pre A
+        //{source: "Veronica", target: "Nina", close: 50},
+        //{source: "Veronica", target: "Shannon", close: 50},
+        //{source: "Veronica", target: "Jackie", close: 50},
+        //{source: "Veronica", target: "Hannah Brauer", close: 50},
+        //{source: "Veronica", target: "Kevin", close: 50},
+        //{source: "Veronica", target: "Zoe", close: 50},
+        //{source: "Veronica", target: "Alissa", close: 50},
+        {source: "Sydney", target: "Jackie", close: 150},
+        //Jackie knows HS
+        {source: "Jackie", target: "David", close: 50},
+        {source: "Jackie", target: "Wyatt", close: 50},
+        //{source: "Jackie", target: "Alexandra", close: 70},
+        //{source: "Jackie", target: "Adam", close: 70},
+        //{source: "Jackie", target: "Riley", close: 300},
+        //Jackie knows Pre A
+        //{source: "Jackie", target: "Nina", close: 50},
+        //{source: "Jackie", target: "Shannon", close: 50},
+        //{source: "Jackie", target: "Hannah Brauer", close: 50},
+        //{source: "Jackie", target: "Kevin", close: 50},
+        //{source: "Jackie", target: "Zoe", close: 50},
+        //{source: "Jackie", target: "Alissa", close: 50},
+        //{source: "Jackie", target: "Veronica", close: 50},
+        {source: "Sydney", target: "Nina", close: 220},
+        //Nina knows UM
+        //{source: "Nina", target: "Marina", close: 300},
+        //{source: "Nina", target: "Rads", close: 300},
+        //{source: "Nina", target: "Niko", close: 300},
+        //{source: "Nina", target: "Ted", close: 300},
+        //{source: "Nina", target: "Abby", close: 300},
+        //{source: "Nina", target: "Adam", close: 300},
+        //{source: "Nina", target: "Josh", close: 300},
+        //{source: "Nina", target: "Maria", close: 300},
+        //{source: "Nina", target: "Rebekah", close: 300},
+        //{source: "Nina", target: "Seth", close: 300},
+        //{source: "Nina", target: "Trevor", close: 300},
+        //{source: "Nina", target: "Vern", close: 300},
+        //{source: "Nina", target: "Ben", close: 300},
+        //{source: "Nina", target: "Annelise", close: 300},
+        //{source: "Nina", target: "Zach", close: 300},
+        //{source: "Nina", target: "Thejas", close: 300},
+        //{source: "Nina", target: "Gian", close: 300},
+        //{source: "Nina", target: "Brielle", close: 300},
+        //{source: "Nina", target: "Jordan", close: 300},
+        //{source: "Nina", target: "Madeleine", close: 300},
+        //{source: "Nina", target: "Jack Fraiser", close: 300},
+        //Nina knows HS
+        //{source: "Nina", target: "David", close: 150},
+        //{source: "Nina", target: "Wyatt", close: 150},
+        //{source: "Nina", target: "Alexandra", close: 150},
+        //{source: "Nina", target: "Adam", close: 150},
+        //{source: "Nina", target: "Riley", close: 300},
+        //Nina knows Pre A
+        //{source: "Nina", target: "Shannon", close: 50},
+        //{source: "Nina", target: "Jackie", close: 50},
+        //{source: "Nina", target: "Hannah Brauer", close: 50},
+        //{source: "Nina", target: "Kevin", close: 50},
+        //{source: "Nina", target: "Zoe", close: 50},
+        //{source: "Nina", target: "Alissa", close: 50},
+        //{source: "Nina", target: "Veronica", close: 50},
+        {source: "Sydney", target: "Rebekah", close: 220},
+        //Rebekah knows UM (s group)
+        //{source: "Rebekah", target: "Abby", close: 50},
+        //{source: "Rebekah", target: "Marina", close: 50},
+        //{source: "Rebekah", target: "Annelise", close: 50},
+        //{source: "Rebekah", target: "Thejas", close: 50},
+        //{source: "Rebekah", target: "Madeleine", close: 50},
+        //{source: "Rebekah", target: "Zach", close: 50},
+        //{source: "Rebekah", target: "Rads", close: 50},
+        {source: "Sydney", target: "Seth", close: 280},
+        //Seth knows UM (art group)
+        //{source: "Seth", target: "Josh", close: 150},
+        //{source: "Seth", target: "Brielle", close: 150},
+        //{source: "Seth", target: "Trevor", close: 150},
+        //{source: "Seth", target: "Vern", close: 150},
+        //{source: "Seth", target: "Ted", close: 150},
+        //{source: "Seth", target: "Ben", close: 150},
+        //{source: "Seth", target: "Jack Fraiser", close: 300},
+        //{source: "Seth", target: "Jordan", close: 300},
+        //{source: "Seth", target: "Gian", close: 300},
+        //{source: "Seth", target: "Niko", close: 300},
+        //{source: "Seth", target: "Maria", close: 300},
+        {source: "Sydney", target: "Trevor", close: 150},
+        //Trevor knows UM (art group)
+        //{source: "Trevor", target: "Josh", close: 150},
+        //{source: "Trevor", target: "Brielle", close: 150},
+        //{source: "Trevor", target: "Vern", close: 150},
+        //{source: "Trevor", target: "Ted", close: 150},
+        //{source: "Trevor", target: "Ben", close: 150},
+        //{source: "Trevor", target: "Seth", close: 150},
+        //{source: "Trevor", target: "Jack Fraiser", close: 300},
+        //{source: "Trevor", target: "Jordan", close: 300},
+        //{source: "Trevor", target: "Gian", close: 300},
+        //{source: "Trevor", target: "Niko", close: 300},
+        //{source: "Trevor", target: "Maria", close: 300},
+        {source: "Sydney", target: "Vern", close: 280},
+        //Vern knows UM (art group)
+        //{source: "Vern", target: "Josh", close: 300},
+        //{source: "Vern", target: "Brielle", close: 300},
+        //{source: "Vern", target: "Trevor", close: 300},
+        //{source: "Vern", target: "Ted", close: 300},
+        //{source: "Vern", target: "Ben", close: 300},
+        //{source: "Vern", target: "Seth", close: 300},
+        //{source: "Vern", target: "Jack Fraiser", close: 300},
+        //{source: "Vern", target: "Jordan", close: 300},
+        //{source: "Vern", target: "Gian", close: 300},
+        //{source: "Vern", target: "Niko", close: 300},
+        //{source: "Vern", target: "Maria", close: 300},
+        {source: "Sydney", target: "Ben", close: 150},
+        //Ben knows UM (art group)
+        //{source: "Ben", target: "Josh", close: 300},
+        //{source: "Ben", target: "Brielle", close: 300},
+        //{source: "Ben", target: "Trevor", close: 300},
+        //{source: "Ben", target: "Vern", close: 300},
+        //{source: "Ben", target: "Ted", close: 300},
+        //{source: "Ben", target: "Seth", close: 300},
+        //{source: "Ben", target: "Jack Fraiser", close: 300},
+        //{source: "Ben", target: "Jordan", close: 300},
+        //{source: "Ben", target: "Gian", close: 300},
+        //{source: "Ben", target: "Niko", close: 300},
+        //{source: "Ben", target: "Maria", close: 300},
+        {source: "Sydney", target: "Annelise", close: 150},
+        // Annelise knows UM (s group)
+        //{source: "Annelise", target: "Abby", close: 300},
+        //{source: "Annelise", target: "Marina", close: 300},
+        //{source: "Annelise", target: "Thejas", close: 300},
+        //{source: "Annelise", target: "Madeleine", close: 300},
+        //{source: "Annelise", target: "Zach", close: 300},
+        //{source: "Annelise", target: "Rads", close: 300},
+        //{source: "Annelise", target: "Rebekah", close: 300},
+        {source: "Sydney", target: "Zach", close: 50},
+        //Zach knows UM (s group)
+        {source: "Zach", target: "Abby", close: 50},
+        //{source: "Zach", target: "Marina", close: 150},
+        //{source: "Zach", target: "Annelise", close: 150},
+        //{source: "Zach", target: "Thejas", close: 150},
+        //{source: "Zach", target: "Madeleine", close: 150},
+        //{source: "Zach", target: "Rads", close: 150},
+        //{source: "Zach", target: "Rebekah", close: 150},
+        {source: "Sydney", target: "Thejas", close: 190},
+        //Thejas knows UM (s group)
+        //{source: "Thejas", target: "Abby", close: 300},
+        //{source: "Thejas", target: "Marina", close: 300},
+        //{source: "Thejas", target: "Annelise", close: 300},
+        //{source: "Thejas", target: "Madeleine", close: 300},
+        //{source: "Thejas", target: "Zach", close: 300},
+        //{source: "Thejas", target: "Rads", close: 300},
+        //{source: "Thejas", target: "Rebekah", close: 300},
+        {source: "Sydney", target: "Gian", close: 300},
+        //Gian knows UM (art group)
+        //{source: "Gian", target: "Josh", close: 300},
+        //{source: "Gian", target: "Brielle", close: 300},
+        //{source: "Gian", target: "Trevor", close: 300},
+        //{source: "Gian", target: "Vern", close: 300},
+        //{source: "Gian", target: "Ted", close: 300},
+        //{source: "Gian", target: "Ben", close: 300},
+        //{source: "Gian", target: "Seth", close: 300},
+        //{source: "Gian", target: "Jack Fraiser", close: 300},
+        //{source: "Gian", target: "Jordan", close: 300},
+        //{source: "Gian", target: "Niko", close: 300},
+        //{source: "Gian", target: "Maria", close: 300},
+        {source: "Sydney", target: "Macarena", close: 150},
+        {source: "Sydney", target: "Jack Fraiser", close: 300},
+        {source: "Sydney", target: "Madeleine", close: 270},
+        //Madeleine knows UM (s group)
+        //{source: "Madeleine", target: "Abby", close: 150},
+        //{source: "Madeleine", target: "Marina", close: 150},
+        //{source: "Madeleine", target: "Annelise", close: 150},
+        //{source: "Madeleine", target: "Thejas", close: 150},
+        //{source: "Madeleine", target: "Zach", close: 150},
+        //{source: "Madeleine", target: "Rads", close: 150},
+        //{source: "Madeleine", target: "Rebekah", close: 150},
+        {source: "Sydney", target: "Brielle", close: 290},
+        //Brielle knows UM (art group)
+        //{source: "Brielle", target: "Josh", close: 300},
+        //{source: "Brielle", target: "Trevor", close: 300},
+        //{source: "Brielle", target: "Vern", close: 300},
+        //{source: "Brielle", target: "Ted", close: 300},
+        //{source: "Brielle", target: "Ben", close: 300},
+        //{source: "Brielle", target: "Seth", close: 300},
+        //{source: "Brielle", target: "Jack Fraiser", close: 300},
+        //{source: "Brielle", target: "Jordan", close: 300},
+        //{source: "Brielle", target: "Gian", close: 300},
+        //{source: "Brielle", target: "Niko", close: 300},
+       // {source: "Brielle", target: "Maria", close: 300},
+        {source: "Sydney", target: "Sara", close: 220},
+        {source: "Sydney", target: "Jordan", close: 280},
+        {source: "Sydney", target: "Alison Elgass", close: 150},
+        {source: "Sydney", target: "Fion", close: 290},
+        {source: "Sydney", target: "Christine", close: 270},
+        {source: "Sydney", target: "Makayla", close: 300}
+    ];
+
+        //const jNodes = JSON.parse(charList);
+        //const jLinks = JSON.parse(linkList);
+        const simulation = d3.forceSimulation(nodes)
+            .force("charge", d3.forceManyBody())
+            .force("link", d3.forceLink().id(function(d) {
+                return d.name;
+              })
+            .links(links)
+            .distance(function(d) {
+                return d.close;
+            }))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .on("tick", ticked);
+            
+        var links = svg
+            .append("g")
+            .selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .attr("stroke-width",3)
+            //.attr("stroke-width", function(d) {
+            //    return d.close / 10;
+            //})
+            .style("stroke", "#dedede");
+
+        //links.append("text").text(d => d.name);
+
+        var textsAndNodes = svg
+            .append("g")
+            .selectAll("g")
+            .data(nodes)
+            .enter()
+            .append("g")
+
+        var circles = textsAndNodes
+            .append("circle")
+            .attr("r",10)
+            .attr("fill",function(d) {
+                return d.gender;
+              })
+
+
+        var drag = d3
+            .drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+
+        //me trying to add text. 
+        var texts = textsAndNodes
+            .append("text")
+            //.attr("pointer-events", "none")
+            .style("user-select", "none")
+            .text(function(d) {
+                return d.name;
+              });
+
+        circles.call(drag);
+
+        
+
+        
+
+        function ticked() {
+            texts.attr("transform", function(d){return "translate(" + (d.x + 10) + ", " + d.y + ")"});
+            //updating the position
+            
+            circles
+            .attr("cx", function(d) {
+                return d.x;
+            })
+            .attr("cy", function(d) {
+                return d.y;
+            });
+
+            links
+            .attr("x1", function(d) {
+                return d.source.x;
+            })
+            .attr("y1", function(d) {
+                return d.source.y;
+            })
+            .attr("x2", function(d) {
+                return d.target.x;
+            })
+            .attr("y2", function(d) {
+                return d.target.y;
+            });
+            console.log(simulation.alpha());
+        }
+
+        function dragstarted(d) {
+            //your alpha hit 0 it stops! make it run again
+            simulation.alphaTarget(0.3).restart();
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+        }
+        function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+        }
+
+        function dragended(d) {
+            // alpha min is 0, head there
+            simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+    </script>
+</body>
+</html>
